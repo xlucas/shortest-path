@@ -24,7 +24,7 @@ func NewGraph(vertexes []*Vertex) *Graph {
 // the destination.
 func (g *Graph) pathTo(dst string) []*Vertex {
 	var path []*Vertex
-	for vertex := g.vertexMap[dst]; vertex != nil; vertex = vertex.Prev {
+	for vertex := g.vertexMap[dst]; vertex != nil; vertex = vertex.prev {
 		path = append([]*Vertex{vertex}, path...)
 	}
 	return path
@@ -34,10 +34,10 @@ func (g *Graph) pathTo(dst string) []*Vertex {
 // distances to the distance of each arc that leads to them.
 func (g *Graph) prepareOrigin(origin string) {
 	src := g.vertexMap[origin]
-	src.Distance = 0
+	src.distance = 0
 	for _, arc := range src.Arcs {
-		g.vertexMap[arc.Dst].Distance = arc.Distance
-		g.vertexMap[arc.Dst].Prev = src
+		g.vertexMap[arc.Dst].distance = arc.Distance
+		g.vertexMap[arc.Dst].prev = src
 	}
 }
 
@@ -68,10 +68,10 @@ func (g *Graph) ShortestPath(src, dst string) []*Vertex {
 
 		sort.Sort(minVertex.Arcs)
 		for _, arc := range minVertex.Arcs {
-			dist := minVertex.Distance + arc.Distance
-			if neighbor := g.vertexMap[arc.Dst]; neighbor.Distance == infinity || dist < neighbor.Distance {
-				neighbor.Distance = dist
-				neighbor.Prev = minVertex
+			dist := minVertex.distance + arc.Distance
+			if neighbor := g.vertexMap[arc.Dst]; neighbor.distance == infinity || dist < neighbor.distance {
+				neighbor.distance = dist
+				neighbor.prev = minVertex
 			}
 		}
 
