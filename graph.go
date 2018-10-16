@@ -20,8 +20,7 @@ func NewGraph(vertexes []*Vertex) *Graph {
 }
 
 // pathTo traces back the path computed by the shortest path algorithm and
-// returns it as an order list of vertexes, starting from origin, towards
-// the destination.
+// returns it as an ordered list of vertexes, starting from origin.
 func (g *Graph) pathTo(dst string) []*Vertex {
 	var path []*Vertex
 	for vertex := g.vertexMap[dst]; vertex != nil; vertex = vertex.prev {
@@ -80,6 +79,7 @@ func (g *Graph) ShortestPath(src, dst string) []*Vertex {
 	return nil
 }
 
+// prepareMap creates a vertex map indexed by vertex ID, from a slice of vertex.
 func prepareMap(vertexes []*Vertex) map[string]*Vertex {
 	m := make(map[string]*Vertex)
 	for _, v := range vertexes {

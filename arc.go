@@ -1,12 +1,13 @@
 package path
 
-// Arc represents an arc between two vertexes in a graph.
+// Arc represents a path between two vertexes in a graph.
 type Arc struct {
 	Dst      string
 	Distance int
 }
 
-// Arcs is a slice of arcs.
+// Arcs is used to represent a slice of arc and makes it easier to sort them by
+// implementing the sort interface.
 type Arcs []*Arc
 
 func (a Arcs) Len() int {
