@@ -59,8 +59,11 @@ func (g *Graph) ShortestPath(src, dst string) []*Vertex {
 	minVertex := g.remaining.Pop().(*Vertex)
 
 	for minVertex != nil {
-		minVertex = g.remaining.Pop().(*Vertex)
-
+		if v, ok := g.remaining.Pop().(*Vertex); ok {
+			minVertex = v
+		} else {
+			break
+		}
 		if minVertex.ID == dst {
 			return g.pathTo(dst)
 		}
